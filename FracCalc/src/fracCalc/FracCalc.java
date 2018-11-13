@@ -1,11 +1,21 @@
 package fracCalc;
 
+import java.util.*;
+
 public class FracCalc {
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
+        
         // TODO: Read the input from the user and call produceAnswer with an equation
-
+    	Scanner in = new Scanner (System.in); 
+    	String input = "";   //initializes input so I can change it in the while loop
+    	
+        //reads input from user and prints out product of produceAnswer
+    	while ( !(input.equalsIgnoreCase("quit")) ) {
+    		System.out.print("Input expression or enter quit to exit program: ");
+    		input = in.nextLine();
+    		System.out.println(produceAnswer(input));
+    	}
     }
     
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
