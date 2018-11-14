@@ -29,8 +29,10 @@ public class FracCalc {
     public static String produceAnswer(String input)
     { 
         // TODO: Implement this function to produce the solution to the input
-        
+        int SpaceLoc = input.CharAt(" "):
+        String First = input.Substring(0, SpaceLoc);
         return "";
+        
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
