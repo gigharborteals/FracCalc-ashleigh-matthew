@@ -45,7 +45,12 @@ public class FracCalc {
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
 
-        
+        /* Todo for me: set the second operand to a new variable (secondOperandHold), then use index of to find the first underscore (if any), then move the number
+         * into a variable called "secondWhole", then remove the underscore from secondWhole using replaceFirst, then remove secondWhole
+         * from secondOperandHold using replaceFirst, then use index to find the slash (if there is an underscore), then move the substring before
+         * the slash (remove it from secondOperandHold using replaceFirst) into secondNumerator, and remove secondNumerator using replace first from secondOperandHold, then remove the space
+         * FInally, just remove the space from secondOperandHold and move what's left into denominator and bam its done.
+         */
         return secondOperand;
         
     }
