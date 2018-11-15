@@ -1,4 +1,4 @@
-/*package fracCalc;
+package fracCalc;
 
 import java.util.*;
 
