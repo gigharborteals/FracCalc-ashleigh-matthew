@@ -32,18 +32,18 @@ public class FracCalc {
     { 
     	/* Finds first space then puts everything before the first space into the firstOperand and deletes it from input, then 
     	 * removes the space. Does this for every operand and the operator.*/
-        int SpaceLoc = input.indexOf(" ");
-        String firstOperand = input.substring(0, SpaceLoc);
+        int spaceLoc = input.indexOf(" ");
+        String firstOperand = input.substring(0, spaceLoc);
         input = input.replaceFirst(firstOperand, "");
         firstOperand = firstOperand.replaceFirst(" ", "");
         
-        SpaceLoc = input.indexOf(" ");
-        String Operator = input.substring(0, SpaceLoc + 2);
+        spaceLoc = input.indexOf(" ");
+        String Operator = input.substring(0, spaceLoc + 2);
         input = input.replaceFirst(Operator, "");
         Operator = Operator.replaceFirst(" ", "");
         
-        SpaceLoc = input.indexOf(" ");
-        String secondOperand = input.substring(SpaceLoc, input.length());
+        spaceLoc = input.indexOf(" ");
+        String secondOperand = input.substring(spaceLoc, input.length());
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
 
@@ -53,7 +53,55 @@ public class FracCalc {
          * the slash (remove it from secondOperandHold using replaceFirst) into secondNumerator, and remove secondNumerator using replace first from secondOperandHold, then remove the space
          * FInally, just remove the space from secondOperandHold and move what's left into denominator and bam its done.
          */
-        return secondOperand;
+        String secondOperandHold = secondOperand;
+        String whole = "";
+        String numerator = "";
+        String denominator = "";
+        if (secondOperandHold.contains("_")) {
+        	spaceLoc = secondOperandHold.indexOf("_");
+        	whole = secondOperandHold.substring(0, spaceLoc);
+        	secondOperandHold = secondOperandHold.replaceFirst(whole, "");
+    		
+    		spaceLoc = secondOperandHold.indexOf("/");
+    		numerator = secondOperandHold.substring(0, spaceLoc);
+    		secondOperandHold = secondOperandHold.replaceFirst(numerator, "");
+    		
+    		
+    		secondOperandHold = secondOperandHold.replaceFirst("/", "");
+    		denominator = secondOperandHold;
+    		
+        }
+        else {
+        	whole = "0";
+        	if (secondOperandHold.contains("/")) {
+        		
+        		spaceLoc = secondOperandHold.indexOf("/");
+        		numerator = secondOperandHold.substring(0, spaceLoc);
+        		secondOperandHold = secondOperandHold.replaceFirst(numerator, "");
+        		
+        		
+        		secondOperandHold = secondOperandHold.replaceFirst("/", "");
+        		denominator = secondOperandHold;
+
+        	}
+        	else {
+        		
+        		numerator = "0";
+        		denominator = "1";
+        		whole = secondOperand;
+        	}
+        	
+        	
+        }
+        
+        
+        
+        System.out.println("Whole: " + whole);
+        String EndResult = ("whole:" + whole + " numerator: " + numerator + " denominator: " + denominator);
+       // if (secondOperandHold.contains("/"))
+        numerator = numerator.replaceFirst("/", "");
+        return EndResult;
+        
         
     }
 
