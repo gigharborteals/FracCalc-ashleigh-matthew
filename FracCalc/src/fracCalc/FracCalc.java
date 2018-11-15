@@ -28,10 +28,25 @@ public class FracCalc {
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input)
     { 
-        // TODO: Implement this function to produce the solution to the input
-        int SpaceLoc = input.CharAt(" "):
-        String First = input.Substring(0, SpaceLoc);
-        return "";
+    	/* Finds first space then puts everything before the first space into the firstOperand and deletes it from input, then 
+    	 * removes the space. Does this for every operand and the operator.*/
+        int SpaceLoc = input.indexOf(" ");
+        String firstOperand = input.substring(0, SpaceLoc);
+        input = input.replaceFirst(firstOperand, "");
+        firstOperand = firstOperand.replaceFirst(" ", "");
+        
+        SpaceLoc = input.indexOf(" ");
+        String Operator = input.substring(0, SpaceLoc + 2);
+        input = input.replaceFirst(Operator, "");
+        Operator = Operator.replaceFirst(" ", "");
+        
+        SpaceLoc = input.indexOf(" ");
+        String secondOperand = input.substring(SpaceLoc, input.length());
+        input = input.replaceFirst(firstOperand, "");
+        secondOperand = secondOperand.replaceFirst(" ", "");
+
+        
+        return secondOperand;
         
     }
 
