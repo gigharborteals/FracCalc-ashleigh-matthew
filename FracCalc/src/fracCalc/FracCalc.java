@@ -14,7 +14,9 @@ public class FracCalc {
     	while ( !(input.equalsIgnoreCase("quit")) ) {
     		System.out.print("Input expression or enter quit to exit program: ");
     		input = in.nextLine();
-    		System.out.println(produceAnswer(input));
+    		if ( !(input.equalsIgnoreCase("quit")) ) {
+    			System.out.println(produceAnswer(input));
+    		}
     	}
     }
     
@@ -29,10 +31,12 @@ public class FracCalc {
     public static String produceAnswer(String input)
     { 
         // TODO: Implement this function to produce the solution to the input
-        int SpaceLoc = input.CharAt(" "):
-        String First = input.Substring(0, SpaceLoc);
-        return "";
-        
+       int whitespace = input.indexOf(" "); //finds the first whitespace-- used to separate the fractions and operator
+       String firstFrac = input.substring(0,  whitespace); //separates the first fraction 
+       String operand = input.substring( (whitespace - 1), (whitespace + 2) ); //separates the operand
+       String secondFrac = input.substring( (whitespace + 3), input.length() ); //separates the second fraction
+       return secondFrac;
+    	
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
