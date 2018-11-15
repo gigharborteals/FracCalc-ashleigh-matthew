@@ -1,4 +1,4 @@
-package fracCalc;
+/*package fracCalc;
 
 import java.util.*;
 
@@ -14,7 +14,9 @@ public class FracCalc {
     	while ( !(input.equalsIgnoreCase("quit")) ) {
     		System.out.print("Input expression or enter quit to exit program: ");
     		input = in.nextLine();
-    		System.out.println(produceAnswer(input));
+    		if ( !(input.equalsIgnoreCase("quit")) ) {
+    			System.out.println(produceAnswer(input));
+    		}
     	}
     }
     
