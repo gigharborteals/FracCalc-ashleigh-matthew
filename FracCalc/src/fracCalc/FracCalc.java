@@ -97,9 +97,11 @@ public class FracCalc {
         
         
         System.out.println("Whole: " + whole);
-        String EndResult = ("whole:" + whole + " numerator: " + numerator + " denominator: " + denominator);
+        
        // if (secondOperandHold.contains("/"))
         numerator = numerator.replaceFirst("/", "");
+        numerator = numerator.replaceFirst("_", "");
+        String EndResult = ("whole:" + whole + " numerator:" + numerator + " denominator:" + denominator);
         return EndResult;
         
         
