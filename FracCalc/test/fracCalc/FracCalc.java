@@ -47,7 +47,7 @@ public class FracCalc {
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
 
-         
+        /* 
         String secondOperandHold = secondOperand;
         String whole2 = "";
         String numerator2 = "";
@@ -147,9 +147,61 @@ public class FracCalc {
         
         
     }
+    */
+    public static int[] separateOperand(String operand) {
+    	String operandHold = operand;
+        String whole = "";
+        String numerator = "";
+        String denominator = "";
+        int spaceLoc = 0;
+        if (operandHold.contains("_")) {
+        	spaceLoc = operandHold.indexOf("_");
+        	whole = operandHold.substring(0, spaceLoc);
+        	operandHold = operandHold.replaceFirst(whole, "");
+    		
+    		spaceLoc = operandHold.indexOf("/");
+    		numerator = operandHold.substring(0, spaceLoc);
+    		operandHold = operandHold.replaceFirst(numerator, "");
+    		
+    		
+    		operandHold = operandHold.replaceFirst("/", "");
+    		denominator = operandHold;
+    		
+        } else {
+        	whole = "0";
+        	if (operandHold.contains("/")) {
+        		
+        		spaceLoc = operandHold.indexOf("/");
+        		numerator = operandHold.substring(0, spaceLoc);
+        		operandHold = operandHold.replaceFirst(numerator, "");
+        		
+        		
+        		operandHold = operandHold.replaceFirst("/", "");
+        		denominator = operandHold;
 
-    // TODO: Fill in the space below with any helper methods that you think you will need
+        	} else {
+        		
+        		numerator = "0";
+        		denominator = "1";
+        		whole = operand;
+        	}
+        	
+        	
+        }
+        
+        
+        numerator = numerator.replaceFirst("/", "");
+        numerator = numerator.replaceFirst("_", "");
+        int intWhole = operandIntoInt(whole);
+        int intNumerator = operandIntoInt(numerator);
+        int intDenominator = operandIntoInt(denominator);
+        int[] separatedOperand = {intWhole, intNumerator, intDenominator};
+        return separatedOperand;
+    }
+    
+    
     public static int operandIntoInt(String operand) {
     	int intOperand = Integer.parseInt(operand);
+    	return intOperand;
     }
 }
