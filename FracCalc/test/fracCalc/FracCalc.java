@@ -47,48 +47,81 @@ public class FracCalc {
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
 
-        /* Todo for me: set the second operand to a new variable (secondOperandHold), then use index of to find the first underscore (if any), then move the number
-         * into a variable called "secondWhole", then remove the underscore from secondWhole using replaceFirst, then remove secondWhole
-         * from secondOperandHold using replaceFirst, then use index to find the slash (if there is an underscore), then move the substring before
-         * the slash (remove it from secondOperandHold using replaceFirst) into secondNumerator, and remove secondNumerator using replace first from secondOperandHold, then remove the space
-         * FInally, just remove the space from secondOperandHold and move what's left into denominator and bam its done.
-         */
+         
         String secondOperandHold = secondOperand;
-        String whole = "";
-        String numerator = "";
-        String denominator = "";
+        String whole2 = "";
+        String numerator2 = "";
+        String denominator2 = "";
         if (secondOperandHold.contains("_")) {
         	spaceLoc = secondOperandHold.indexOf("_");
-        	whole = secondOperandHold.substring(0, spaceLoc);
-        	secondOperandHold = secondOperandHold.replaceFirst(whole, "");
+        	whole2 = secondOperandHold.substring(0, spaceLoc);
+        	secondOperandHold = secondOperandHold.replaceFirst(whole2, "");
     		
     		spaceLoc = secondOperandHold.indexOf("/");
-    		numerator = secondOperandHold.substring(0, spaceLoc);
-    		secondOperandHold = secondOperandHold.replaceFirst(numerator, "");
-    		
+    		numerator2 = secondOperandHold.substring(0, spaceLoc);
+    		secondOperandHold = secondOperandHold.replaceFirst(numerator2, "");
     		
     		secondOperandHold = secondOperandHold.replaceFirst("/", "");
-    		denominator = secondOperandHold;
+    		denominator2 = secondOperandHold;
     		
         }
         else {
-        	whole = "0";
+        	whole2 = "0";
         	if (secondOperandHold.contains("/")) {
         		
         		spaceLoc = secondOperandHold.indexOf("/");
-        		numerator = secondOperandHold.substring(0, spaceLoc);
-        		secondOperandHold = secondOperandHold.replaceFirst(numerator, "");
+        		numerator2 = secondOperandHold.substring(0, spaceLoc);
+        		secondOperandHold = secondOperandHold.replaceFirst(numerator2, "");
         		
         		
         		secondOperandHold = secondOperandHold.replaceFirst("/", "");
-        		denominator = secondOperandHold;
+        		denominator2 = secondOperandHold;
 
         	}
         	else {
         		
-        		numerator = "0";
-        		denominator = "1";
-        		whole = secondOperand;
+        		numerator2 = "0";
+        		denominator2 = "1";
+        		whole2 = secondOperand;
+        	}
+        	
+        	
+        }
+        String firstOperandHold = firstOperand;
+        String whole1 = "";
+        String numerator1 = "";
+        String denominator1 = "";
+        if (firstOperandHold.contains("_")) {
+        	spaceLoc = firstOperandHold.indexOf("_");
+        	whole1 = firstOperandHold.substring(0, spaceLoc);
+        	firstOperandHold = firstOperandHold.replaceFirst(whole1, "");
+    		
+    		spaceLoc = firstOperandHold.indexOf("/");
+    		numerator1 = firstOperandHold.substring(0, spaceLoc);
+    		firstOperandHold = firstOperandHold.replaceFirst(numerator1, "");
+    		
+    		firstOperandHold = firstOperandHold.replaceFirst("/", "");
+    		denominator1 = firstOperandHold;
+    		
+        }
+        else {
+        	whole1 = "0";
+        	if (firstOperandHold.contains("/")) {
+        		
+        		spaceLoc = firstOperandHold.indexOf("/");
+        		numerator1 = firstOperandHold.substring(0, spaceLoc);
+        		firstOperandHold = firstOperandHold.replaceFirst(numerator1, "");
+        		
+        		
+        		firstOperandHold = firstOperandHold.replaceFirst("/", "");
+        		denominator1 = firstOperandHold;
+
+        	}
+        	else {
+        		
+        		numerator1 = "0";
+        		denominator1 = "1";
+        		whole1 = secondOperand;
         	}
         	
         	
@@ -96,12 +129,20 @@ public class FracCalc {
         
         
         
-        System.out.println("Whole: " + whole);
         
        // if (secondOperandHold.contains("/"))
-        numerator = numerator.replaceFirst("/", "");
-        numerator = numerator.replaceFirst("_", "");
-        String EndResult = ("whole:" + whole + " numerator:" + numerator + " denominator:" + denominator);
+        numerator2 = numerator2.replaceFirst("/", "");
+        numerator2 = numerator2.replaceFirst("_", "");
+        numerator1 = numerator1.replaceFirst("/", "");
+        numerator1 = numerator1.replaceFirst("_", "");
+        
+        
+        
+        
+        
+        
+        
+        String EndResult = ("whole:" + whole1 + " numerator:" + numerator1 + " denominator:" + denominator1);
         return EndResult;
         
         
