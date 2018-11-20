@@ -149,5 +149,7 @@ public class FracCalc {
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
-    
+    public static int operandIntoInt(String operand) {
+    	int intOperand = Integer.parseInt(operand);
+    }
 }
