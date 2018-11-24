@@ -3,7 +3,8 @@ package fracCalc;
 import java.util.*;
 
 public class FracCalc {
-
+public static boolean firstOperandIsFraction;
+public static boolean secondOperandIsFraction;
     public static void main(String[] args) {
         
         // TODO: Read the input from the user and call produceAnswer with an equation
@@ -38,116 +39,68 @@ public class FracCalc {
         firstOperand = firstOperand.replaceFirst(" ", "");
         
         spaceLoc = input.indexOf(" ");
-        String Operator = input.substring(0, spaceLoc + 2);
-        input = input.replaceFirst(Operator, "");
-        Operator = Operator.replaceFirst(" ", "");
+        String operator = input.substring(0, spaceLoc + 2);
+        input = input.replaceFirst(operator, "");
+        operator = operator.replaceFirst(" ", "");
         
         spaceLoc = input.indexOf(" ");
         String secondOperand = input.substring(spaceLoc, input.length());
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
-
-        /* 
-        String secondOperandHold = secondOperand;
-        String whole2 = "";
-        String numerator2 = "";
-        String denominator2 = "";
-        if (secondOperandHold.contains("_")) {
-        	spaceLoc = secondOperandHold.indexOf("_");
-        	whole2 = secondOperandHold.substring(0, spaceLoc);
-        	secondOperandHold = secondOperandHold.replaceFirst(whole2, "");
-    		
-    		spaceLoc = secondOperandHold.indexOf("/");
-    		numerator2 = secondOperandHold.substring(0, spaceLoc);
-    		secondOperandHold = secondOperandHold.replaceFirst(numerator2, "");
-    		
-    		secondOperandHold = secondOperandHold.replaceFirst("/", "");
-    		denominator2 = secondOperandHold;
-    		
-        }
-        else {
-        	whole2 = "0";
-        	if (secondOperandHold.contains("/")) {
-        		
-        		spaceLoc = secondOperandHold.indexOf("/");
-        		numerator2 = secondOperandHold.substring(0, spaceLoc);
-        		secondOperandHold = secondOperandHold.replaceFirst(numerator2, "");
-        		
-        		
-        		secondOperandHold = secondOperandHold.replaceFirst("/", "");
-        		denominator2 = secondOperandHold;
-
-        	}
-        	else {
-        		
-        		numerator2 = "0";
-        		denominator2 = "1";
-        		whole2 = secondOperand;
-        	}
+        
+        int intFirstOperand[] = separateOperand(firstOperand);
+        int intSecondOperand[] = separateOperand(secondOperand);
+        String answer = "";
+        if (operator.contains("*")) {
         	
+        	System.out.println("Whole: " + intFirstOperand[0] + intFirstOperand[2] + intFirstOperand[1]);
         	
-        }
-        String firstOperandHold = firstOperand;
-        String whole1 = "";
-        String numerator1 = "";
-        String denominator1 = "";
-        if (firstOperandHold.contains("_")) {
-        	spaceLoc = firstOperandHold.indexOf("_");
-        	whole1 = firstOperandHold.substring(0, spaceLoc);
-        	firstOperandHold = firstOperandHold.replaceFirst(whole1, "");
-    		
-    		spaceLoc = firstOperandHold.indexOf("/");
-    		numerator1 = firstOperandHold.substring(0, spaceLoc);
-    		firstOperandHold = firstOperandHold.replaceFirst(numerator1, "");
-    		
-    		firstOperandHold = firstOperandHold.replaceFirst("/", "");
-    		denominator1 = firstOperandHold;
-    		
-        }
-        else {
-        	whole1 = "0";
-        	if (firstOperandHold.contains("/")) {
-        		
-        		spaceLoc = firstOperandHold.indexOf("/");
-        		numerator1 = firstOperandHold.substring(0, spaceLoc);
-        		firstOperandHold = firstOperandHold.replaceFirst(numerator1, "");
-        		
-        		
-        		firstOperandHold = firstOperandHold.replaceFirst("/", "");
-        		denominator1 = firstOperandHold;
-
-        	}
-        	else {
-        		
-        		numerator1 = "0";
-        		denominator1 = "1";
-        		whole1 = secondOperand;
-        	}
+        	int firstImproperFractionNumerator = (intFirstOperand[0] * intFirstOperand[2] /* First denominator */) + intFirstOperand[1] /* First numerator */; // This is the numerator of the first fraction as an improper fraction
+        	int secondImproperFractionNumerator = (intSecondOperand[0] * intSecondOperand[2]) + intSecondOperand[1]; // This is the numerator of the second fraction as an improper fraction
         	
+        	int improperMultipliedNumerator = firstImproperFractionNumerator * secondImproperFractionNumerator; // Multiples the numerator of the two improper fractions
         	
+        	int improperMultipliedDenominator = intFirstOperand[2] * intSecondOperand[2]; // Multiples the two denominators
+        	
+        	answer = convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
+        		
         }
         
-        
-        
-        
-       // if (secondOperandHold.contains("/"))
-        numerator2 = numerator2.replaceFirst("/", "");
-        numerator2 = numerator2.replaceFirst("_", "");
-        numerator1 = numerator1.replaceFirst("/", "");
-        numerator1 = numerator1.replaceFirst("_", "");
-        
-        
-        
-        
-        
-        
-        
-        String EndResult = ("whole:" + whole1 + " numerator:" + numerator1 + " denominator:" + denominator1);
-        return EndResult;
-        
-        
+        return answer;
+  
     }
-    */
+    public static String convertToMixedNumber(int numerator, int denominator) { // converts improper fractions into mixed numbers and simplifies them
+    	int simplifiedNumerator = numerator;
+    	int simplifiedDenominator = denominator;
+
+    	int whole = ((simplifiedNumerator - (simplifiedNumerator % simplifiedDenominator)) / denominator);
+    	int mixedNumerator = (numerator % denominator);
+    	
+    	simplifiedNumerator = mixedNumerator / GCF(mixedNumerator, denominator); // Simplifies numerator
+    	simplifiedDenominator = denominator / GCF(mixedNumerator, denominator);
+ 
+    	
+    	return whole + " " + simplifiedNumerator + "/" + simplifiedDenominator;
+    }
+   public static int GCF(int numerator, int denominator) // Finds the greatest common factor of the denominator and numerator
+    {   
+        if (numerator == 0) {
+          return denominator;
+        }
+        if (denominator == 0) {
+          return numerator; 
+        }
+        
+        if (numerator == denominator) { 
+            return numerator; 
+        }
+         
+        if (numerator > denominator) { 
+            return GCF(numerator - denominator, denominator); // if the numerator is greater than the denominator, loops the method and returns that.
+        }
+        return GCF(numerator, denominator - numerator); // Returns greatest common factor outside if statement
+    } 
+    
     public static int[] separateOperand(String operand) {
     	String operandHold = operand;
         String whole = "";
