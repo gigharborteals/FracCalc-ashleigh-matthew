@@ -64,11 +64,20 @@ public static boolean secondOperandIsFraction;
         if (operator.contains("+")) { // Function to add two fractions together
         	int convertedNumeratorOne = intFirstOperand[1] * intSecondOperand[2]; // This fraction is the first numerator converted to follow a common denominator
         	int convertedNumeratorTwo = intSecondOperand[1] * intFirstOperand[2]; // This fraction is the second numerator converted to follow a common denominator
-        	int commonDenominator = intFirstOperand[2] * intSecondOperand[2];
-        	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo;
-        	int addedWhole = intFirstOperand[0] + intSecondOperand[0];
+        	int commonDenominator = intFirstOperand[2] * intSecondOperand[2]; // This finds the common denominator between the two fractions
+        	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo; // This adds the two converted numerators
+        	int addedWhole = intFirstOperand[0] + intSecondOperand[0]; // This adds the two whole numbers together
         	
-        	answer = convertToMixedNumber((addedNumerator) + addedWhole * commonDenominator, commonDenominator);
+        	answer = convertToMixedNumber((addedNumerator) + addedWhole * commonDenominator /* this adds the whole numbers to the numerators */, commonDenominator); // This outputs the fractions as a mixed number
+        }
+        if (operator.contains("-")) {
+        	int commonDenominator = intFirstOperand[2] * intSecondOperand[2];
+        	int convertedNumeratorOne = (intFirstOperand[1] * intSecondOperand[2]) + intFirstOperand[0] * commonDenominator;
+        	int convertedNumeratorTwo = (intSecondOperand[1] * intFirstOperand[2]) + intSecondOperand[0] * commonDenominator;
+        	
+        	int subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
+        	answer = convertToMixedNumber(subtractedNumerator, commonDenominator);
+        	
         }
         return answer;
   
