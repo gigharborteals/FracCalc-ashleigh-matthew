@@ -153,7 +153,7 @@ public static boolean secondOperandIsFraction;
     }
     
     
-    public static int operandIntoInt(String operand) {
+    public static int operandIntoInt(String operand) { //changes the operand into an integer to do clculations with
     	int intOperand = Integer.parseInt(operand);
     	return intOperand;
     }
