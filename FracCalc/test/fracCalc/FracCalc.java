@@ -52,29 +52,20 @@ public static boolean secondOperandIsFraction;
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
         
-        //separates the operands into whole, numerator, denominator
+        //separates the operands into whole, numerator, denominator and turns into integers
         int intFirstOperand[] = separateOperand(firstOperand);
         int intSecondOperand[] = separateOperand(secondOperand);
         
         String answer = ""; //initializes variable
-        if (operator.contains("*")) {
-        	
-        	System.out.println("Whole: " + intFirstOperand[0] + intFirstOperand[2] + intFirstOperand[1]);
-        	
-        	int firstImproperFractionNumerator = (intFirstOperand[0] * intFirstOperand[2] /* First denominator */) + intFirstOperand[1] /* First numerator */; // This is the numerator of the first fraction as an improper fraction
-        	int secondImproperFractionNumerator = (intSecondOperand[0] * intSecondOperand[2]) + intSecondOperand[1]; // This is the numerator of the second fraction as an improper fraction
-        	
-        	int improperMultipliedNumerator = firstImproperFractionNumerator * secondImproperFractionNumerator; // Multiples the numerator of the two improper fractions
-        	
-        	int improperMultipliedDenominator = intFirstOperand[2] * intSecondOperand[2]; // Multiples the two denominators
-        	
-        	answer = convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
-        		
+        
+        if (operator.contains("*")) { //if operator is multiplication, multiply operands
+        	answer = multiplication(intFirstOperand, intSecondOperand);
         }
         
         return answer;
   
     }
+    
     public static String convertToMixedNumber(int numerator, int denominator) { // converts improper fractions into mixed numbers and simplifies them
     	int simplifiedNumerator = numerator;
     	int simplifiedDenominator = denominator;
@@ -88,6 +79,7 @@ public static boolean secondOperandIsFraction;
     	
     	return whole + " " + simplifiedNumerator + "/" + simplifiedDenominator;
     }
+    
    public static int GCF(int numerator, int denominator) // Finds the greatest common factor of the denominator and numerator
     {   
         if (numerator == 0) {
@@ -172,4 +164,18 @@ public static boolean secondOperandIsFraction;
     	int intOperand = Integer.parseInt(operand);
     	return intOperand;
     }
-}    
+    
+    public static String multiplication(int[] intFirstOperand, int[] intSecondOperand) {
+    	System.out.println("Whole: " + intFirstOperand[0] + intFirstOperand[2] + intFirstOperand[1]);
+        	
+        int firstImproperFractionNumerator = (intFirstOperand[0] * intFirstOperand[2] /* First denominator */) + intFirstOperand[1] /* First numerator */; // This is the numerator of the first fraction as an improper fraction
+        int secondImproperFractionNumerator = (intSecondOperand[0] * intSecondOperand[2]) + intSecondOperand[1]; // This is the numerator of the second fraction as an improper fraction
+        	
+        int improperMultipliedNumerator = firstImproperFractionNumerator * secondImproperFractionNumerator; // Multiples the numerator of the two improper fractions
+        	
+        int improperMultipliedDenominator = intFirstOperand[2] * intSecondOperand[2]; // Multiples the two denominators
+        	
+        return convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
+        	
+    }
+}   
