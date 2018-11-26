@@ -65,7 +65,15 @@ public static boolean secondOperandIsFraction;
         	answer = convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
         		
         }
-        
+        if (operator.contains("+")) { // Function to add two fractions together
+        	int convertedNumeratorOne = intFirstOperand[1] * intSecondOperand[2]; // This fraction is the first numerator converted to follow a common denominator
+        	int convertedNumeratorTwo = intSecondOperand[1] * intFirstOperand[2]; // This fraction is the second numerator converted to follow a common denominator
+        	int commonDenominator = intFirstOperand[2] * intSecondOperand[2];
+        	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo;
+        	int addedWhole = intFirstOperand[0] + intSecondOperand[0];
+        	
+        	answer = convertToMixedNumber((addedNumerator) + addedWhole * commonDenominator, commonDenominator);
+        }
         return answer;
   
     }
