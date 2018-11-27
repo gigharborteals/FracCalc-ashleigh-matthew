@@ -59,13 +59,13 @@ public class FracCalc {
         String answer = ""; //initializes variable
         
         if (operator.contains("*")) { //if operator is multiplication, multiply operands
-        	answer = multiplication(intFirstOperand, intSecondOperand);
+        	answer = multiplication(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("+")) { // Function to add two fractions together
-        	answer = addition(intFirstOperand, intSecondOperand);
+        	answer = addition(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("-")) {
-        	answer = subtraction(intFirstOperand, intSecondOperand);
+        	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("/")) {
-        	//division method
+        	//division method(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else {
         	answer = "Please enter a valid expression."; //error catch
         }
@@ -75,10 +75,10 @@ public class FracCalc {
     
     
     /* Subtracts the second operand from the first operand */
-    public static String subtraction(int[] intFirstOperand, int[] intSecondOperand) {
-    	int commonDenominator = intFirstOperand[2] * intSecondOperand[2];
-    	int convertedNumeratorOne = (intFirstOperand[1] * intSecondOperand[2]) + intFirstOperand[0] * commonDenominator;
-    	int convertedNumeratorTwo = (intSecondOperand[1] * intFirstOperand[2]) + intSecondOperand[0] * commonDenominator;
+    public static String subtraction(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	int commonDenominator = denominator1 * denominator2;
+    	int convertedNumeratorOne = (numerator1 * denominator2) + whole1 * commonDenominator;
+    	int convertedNumeratorTwo = (numerator2 * denominator1) + whole2 * commonDenominator;
     	
     	int subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
     	return convertToMixedNumber(subtractedNumerator, commonDenominator);
@@ -87,15 +87,15 @@ public class FracCalc {
     
     
     /* Adds the first and second operands together */
-    public static String addition(int[] intFirstOperand, int[] intSecondOperand) {
-    	int convertedNumeratorOne = intFirstOperand[1] * intSecondOperand[2]; // This fraction is the first numerator converted to follow a common denominator
-    	int convertedNumeratorTwo = intSecondOperand[1] * intFirstOperand[2]; // This fraction is the second numerator converted to follow a common denominator
-    	int commonDenominator = intFirstOperand[2] * intSecondOperand[2]; // This finds the common denominator between the two fractions
-    	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo; // This adds the two converted numerators
-    	int addedWhole = intFirstOperand[0] + intSecondOperand[0]; // This adds the two whole numbers together
+    public static String addition(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	int convertedNumeratorOne = numerator1 * denominator2; // This fraction is the first numerator converted to follow a common denominator
+    	int convertedNumeratorTwo = numerator2 * denominator1; // This fraction is the second numerator converted to follow a common denominator
+    	int commonDenominator = denominator1 * denominator2; // creates a common denominator so fractions can legally be added
+    	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo; 
+    	int addedWhole = whole1 + whole2; 
     	
     	//outputs the fraction as a mixed number
-    	return convertToMixedNumber((addedNumerator) + addedWhole * commonDenominator /* this adds the whole numbers to the numerators */, commonDenominator);
+    	return convertToMixedNumber((addedNumerator + addedWhole * commonDenominator) /* this adds the whole numbers to the numerators */, commonDenominator);
     }
     
     
@@ -194,7 +194,8 @@ public class FracCalc {
     }
     
     
-    /* changes the operand into an integer to do calculations with */
+    /* changes the operand into an integer to do calculations with
+     * --implemented in method separateOperator, lines 188-190-- */
     public static int operandIntoInt(String operand) { 
     	int intOperand = Integer.parseInt(operand);
     	return intOperand;
@@ -202,15 +203,15 @@ public class FracCalc {
     
     
     /* multiplies the first and second operands */
-    public static String multiplication(int[] intFirstOperand, int[] intSecondOperand) {
-    	System.out.println("Whole: " + intFirstOperand[0] + intFirstOperand[2] + intFirstOperand[1]);
+    public static String multiplication(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	System.out.println("Whole: " + whole1 + denominator1 + numerator1);
         	
-        int firstImproperFractionNumerator = (intFirstOperand[0] * intFirstOperand[2] /* First denominator */) + intFirstOperand[1] /* First numerator */; // This is the numerator of the first fraction as an improper fraction
-        int secondImproperFractionNumerator = (intSecondOperand[0] * intSecondOperand[2]) + intSecondOperand[1]; // This is the numerator of the second fraction as an improper fraction
+        int firstImproperFractionNumerator = (whole1 * denominator1) + numerator1; // numerator of the first fraction as an improper fraction
+        int secondImproperFractionNumerator = (whole2 * denominator2) + numerator2; // numerator of the second fraction as an improper fraction
         	
         int improperMultipliedNumerator = firstImproperFractionNumerator * secondImproperFractionNumerator; // Multiples the numerator of the two improper fractions
         	
-        int improperMultipliedDenominator = intFirstOperand[2] * intSecondOperand[2]; // Multiples the two denominators
+        int improperMultipliedDenominator = denominator1 * denominator2; // Multiples the two denominators
         	
         return convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
     }
