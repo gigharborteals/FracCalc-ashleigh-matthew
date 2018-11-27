@@ -65,7 +65,7 @@ public class FracCalc {
         } else if (operator.contains("-")) {
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("/")) {
-        	//division method(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
+        	answer = division(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else {
         	answer = "Please enter a valid expression."; //error catch
         }
@@ -110,8 +110,12 @@ public class FracCalc {
     	simplifiedNumerator = mixedNumerator / GCF(mixedNumerator, denominator); // Simplifies numerator
     	simplifiedDenominator = denominator / GCF(mixedNumerator, denominator);
  
-    	
-    	return whole + " " + simplifiedNumerator + "/" + simplifiedDenominator;
+    	//if simplified fraction is a whole number, return only the whole number
+    	if ((simplifiedNumerator == 0) & (simplifiedDenominator == 1)) { 
+    		return whole + "";
+    	} else {
+    		return whole + "_" + simplifiedNumerator + "/" + simplifiedDenominator;
+    	}
     }
     
     /* finds the greatest common factor of the denominator and numerator */
@@ -204,16 +208,36 @@ public class FracCalc {
     
     /* multiplies the first and second operands */
     public static String multiplication(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
-    	System.out.println("Whole: " + whole1 + denominator1 + numerator1);
-        	
-        int firstImproperFractionNumerator = (whole1 * denominator1) + numerator1; // numerator of the first fraction as an improper fraction
-        int secondImproperFractionNumerator = (whole2 * denominator2) + numerator2; // numerator of the second fraction as an improper fraction
+    	//turns mixed fractions into improper fractions to work with
+    	int firstImproperFractionNumerator = improperNumerator(whole1, denominator1, numerator1); 
+        int secondImproperFractionNumerator = improperNumerator(whole2, denominator2, numerator2);
         	
         int improperMultipliedNumerator = firstImproperFractionNumerator * secondImproperFractionNumerator; // Multiples the numerator of the two improper fractions
         	
         int improperMultipliedDenominator = denominator1 * denominator2; // Multiples the two denominators
         	
         return convertToMixedNumber(improperMultipliedNumerator, improperMultipliedDenominator); // Converts the improper fraction into a mixed number and simplifies it.
+    }
+    
+    
+    /* divides first operand by the second using a strategy that switches the second operand's
+     * numerator and denominator, turning the division into multiplication. This allows the use of the 
+     * multiplication method */
+    public static String division(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	//turns second operand into an improper fraction to be worked with--must be improper before switching denom. and numer. 
+    	int improperNumerator1 = improperNumerator(whole2, denominator2, numerator2);
+    	int newWhole2 = 0; //operand is now an improper fraction, so whole must be changed to 0
+        
+    	//switches the second operator's numerator and denominator
+    	int newNumerator2 = denominator2;
+    	int newDenominator2 = improperNumerator1;
+    	//finishes the calculation with the multiplication method
+    	return multiplication(whole1, newWhole2, numerator1, newNumerator2, denominator1, newDenominator2);
+    }
+    
+    /* turns mixed fractions into improper fractions to work with */
+    public static int improperNumerator(int whole, int denominator, int numerator) {
+    	return (whole * denominator) + numerator;
     }
     
     
