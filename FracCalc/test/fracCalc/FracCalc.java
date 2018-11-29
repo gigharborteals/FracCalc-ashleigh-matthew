@@ -132,9 +132,9 @@ public class FracCalc {
         }
          
         if (numerator > denominator) { 
-            return GCF(numerator - denominator, denominator); // if the numerator is greater than the denominator, loops the method and returns that.
+            return GCF(Math.subtractExact(numerator, denominator), denominator); // if the numerator is greater than the denominator, loops the method and returns that.
         }
-        return GCF(numerator, denominator - numerator); // Returns greatest common factor outside if statement
+        return GCF(numerator, Math.subtractExact(denominator, numerator)); // Returns greatest common factor outside if statement
     } 
    
    
