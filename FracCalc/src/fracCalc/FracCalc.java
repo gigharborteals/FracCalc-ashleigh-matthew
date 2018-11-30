@@ -78,19 +78,27 @@ public class FracCalc {
     public static String subtraction(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
     	int improperNumeratorOne = improperNumerator(whole1, denominator1, numerator1);
     	int improperNumeratorTwo = improperNumerator(whole2, denominator2, numerator2);
-    	int commonDenominator = denominator1 * denominator2;
     	
-    	//initializes numerator variables so that if the operand is a whole number, operations can take place on those values
-    	int convertedNumeratorOne = improperNumeratorOne;
-    	int convertedNumeratorTwo = improperNumeratorTwo;
+    	//initializes variables
+    	int commonDenominator = 0;
+    	int convertedNumeratorOne = 0;
+    	int convertedNumeratorTwo = 0;
+    	int subtractedNumerator = 0;
     	
-    	//if operands are whole numbers, they should not be altered as is done with fractions
-    	if (commonDenominator != 1) {
-    		convertedNumeratorOne = (improperNumeratorOne * denominator2) + whole1 * commonDenominator;
-    		convertedNumeratorTwo = (improperNumeratorTwo * denominator1) + whole2 * commonDenominator;
+    	//if the operands already have common denominators, certain steps should be omitted
+    	if (denominator1 == denominator2) {
+    		commonDenominator = denominator1;
+    		subtractedNumerator = improperNumeratorOne - improperNumeratorTwo;
+    	} else {
+    		commonDenominator = denominator1 * denominator2;
+    		
+    		//when one side of an equation is multiplied by a value, the other side must be multiplied by the same value
+    		convertedNumeratorOne = (improperNumeratorOne * denominator2) * commonDenominator; 
+    		convertedNumeratorTwo = (improperNumeratorTwo * denominator1) * commonDenominator;
+    	
+    		subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
     	}
     	
-    	int subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
     	return convertToMixedNumber(subtractedNumerator, commonDenominator);
     	
     }
