@@ -93,8 +93,8 @@ public class FracCalc {
     		commonDenominator = denominator1 * denominator2;
     		
     		//when one side of an equation is multiplied by a value, the other side must be multiplied by the same value
-    		convertedNumeratorOne = (improperNumeratorOne * denominator2) * commonDenominator; 
-    		convertedNumeratorTwo = (improperNumeratorTwo * denominator1) * commonDenominator;
+    		convertedNumeratorOne = improperNumeratorOne * denominator2; 
+    		convertedNumeratorTwo = improperNumeratorTwo * denominator1;
     	
     		subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
     	}
@@ -106,14 +106,30 @@ public class FracCalc {
     
     /* Adds the first and second operands together */
     public static String addition(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
-    	int convertedNumeratorOne = numerator1 * denominator2; // This fraction is the first numerator converted to follow a common denominator
-    	int convertedNumeratorTwo = numerator2 * denominator1; // This fraction is the second numerator converted to follow a common denominator
-    	int commonDenominator = denominator1 * denominator2; // creates a common denominator so fractions can legally be added
-    	int addedNumerator = convertedNumeratorOne + convertedNumeratorTwo; 
-    	int addedWhole = whole1 + whole2; 
+    	int improperNumeratorOne = improperNumerator(whole1, denominator1, numerator1);
+    	int improperNumeratorTwo = improperNumerator(whole2, denominator2, numerator2);
     	
-    	//outputs the fraction as a mixed number
-    	return convertToMixedNumber((addedNumerator + addedWhole * commonDenominator) /* this adds the whole numbers to the numerators */, commonDenominator);
+    	//initializes variables
+    	int commonDenominator = 0;
+    	int convertedNumeratorOne = 0;
+    	int convertedNumeratorTwo = 0;
+    	int addedNumerator = 0;
+    	
+    	//if the operands already have common denominators, certain steps should be omitted
+    	if (denominator1 == denominator2) {
+    		commonDenominator = denominator1;
+    		addedNumerator = improperNumeratorOne + improperNumeratorTwo;
+    	} else {
+    		commonDenominator = denominator1 * denominator2;
+    		
+    		//when one side of an equation is multiplied by a value, the other side must be multiplied by the same value
+    		convertedNumeratorOne = improperNumeratorOne * denominator2; 
+    		convertedNumeratorTwo = improperNumeratorTwo * denominator1;
+    	
+    		addedNumerator = convertedNumeratorOne + convertedNumeratorTwo;
+    	}
+    	
+    	return convertToMixedNumber(addedNumerator, commonDenominator);
     }
     
     
