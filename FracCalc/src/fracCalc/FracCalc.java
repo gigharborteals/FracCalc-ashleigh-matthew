@@ -76,9 +76,19 @@ public class FracCalc {
     
     /* Subtracts the second operand from the first operand */
     public static String subtraction(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	int improperNumeratorOne = improperNumerator(whole1, denominator1, numerator1);
+    	int improperNumeratorTwo = improperNumerator(whole2, denominator2, numerator2);
     	int commonDenominator = denominator1 * denominator2;
-    	int convertedNumeratorOne = (numerator1 * denominator2) + whole1 * commonDenominator;
-    	int convertedNumeratorTwo = (numerator2 * denominator1) + whole2 * commonDenominator;
+    	
+    	//initializes numerator variables so that if the operand is a whole number, operations can take place on those values
+    	int convertedNumeratorOne = improperNumeratorOne;
+    	int convertedNumeratorTwo = improperNumeratorTwo;
+    	
+    	//if operands are whole numbers, they should not be altered as is done with fractions
+    	if (commonDenominator != 1) {
+    		convertedNumeratorOne = (improperNumeratorOne * denominator2) + whole1 * commonDenominator;
+    		convertedNumeratorTwo = (improperNumeratorTwo * denominator1) + whole2 * commonDenominator;
+    	}
     	
     	int subtractedNumerator = convertedNumeratorOne - convertedNumeratorTwo;
     	return convertToMixedNumber(subtractedNumerator, commonDenominator);
@@ -114,6 +124,14 @@ public class FracCalc {
     	if ((simplifiedNumerator == 0) & (simplifiedDenominator == 1)) { 
     		return whole + "";
     	} else {
+    		if (whole < 0) { // if the whole number is negative, remove any other negative signs within the fraction
+    			if (simplifiedNumerator < 0) {
+    				simplifiedNumerator *= -1;
+    			}
+    			if (simplifiedDenominator < 0) {
+    				simplifiedDenominator *= -1;
+    			}
+    		}
     		return whole + "_" + simplifiedNumerator + "/" + simplifiedDenominator;
     	}
     }
@@ -122,20 +140,27 @@ public class FracCalc {
    public static int GCF(int numerator, int denominator) {   
         if (numerator == 0) {
           return denominator;
-        }
-        if (denominator == 0) {
+          
+        } else if (denominator == 0) {
           return numerator; 
-        }
-        
-        if (numerator == denominator) { 
+          
+        } else if (numerator == denominator) { 
             return numerator; 
+            
+        } else if (numerator > denominator) {
+        	return GCF(denominator, numerator % denominator);
+        } else if (numerator < denominator) {
+        	return GCF(numerator, denominator % numerator);
+        } else {
+        	return 1;
         }
-         
+        /*
         if (numerator > denominator) { 
             return GCF(Math.subtractExact(numerator, denominator), denominator); // if the numerator is greater than the denominator, loops the method and returns that.
         }
         return GCF(numerator, Math.subtractExact(denominator, numerator)); // Returns greatest common factor outside if statement
-    } 
+   */
+   }
    
    
     /* separates the operand into whole number, numerator, and denominator and returns these values inside an array */
@@ -237,7 +262,16 @@ public class FracCalc {
     
     /* turns mixed fractions into improper fractions to work with */
     public static int improperNumerator(int whole, int denominator, int numerator) {
-    	return (whole * denominator) + numerator;
+    	if (whole == 0) {
+    		return numerator;
+    		
+    	} else if ((whole < 0) || (denominator < 0) || (numerator < 0)) {
+    		return (whole * denominator) - numerator;
+    		
+    	} else {
+    		return (whole * denominator) + numerator;
+    		
+    	}
     }
     
     
