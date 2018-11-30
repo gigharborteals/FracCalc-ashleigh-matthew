@@ -148,13 +148,39 @@ public class FracCalc {
     	if ((simplifiedNumerator == 0) & (simplifiedDenominator == 1)) { 
     		return whole + "";
     	} else {
-    		if (whole < 0) { // if the whole number is negative, remove any other negative signs within the fraction
+    		//if both are negative, they are actually positive
+    		if (simplifiedNumerator < 0 && simplifiedDenominator < 0) { 
+    			simplifiedNumerator *= -1;
+    			simplifiedDenominator *= -1;
+    		}
+    		
+    		//if one number in the fraction is negative, then the whole fraction is negative
+    		if (simplifiedNumerator < 0 && whole > 0) { 
+    			whole *= -1;
+    			simplifiedNumerator *= -1;
+    		}
+    		if (simplifiedDenominator < 0) {
+    			if (whole > 0) {
+    				whole *= -1;
+    				simplifiedDenominator *= -1;
+    			}
+    			if (whole == 0 && simplifiedDenominator < 0) {//if denominator is negative, but numerator is not, moves "-" to numerator
+    				simplifiedNumerator *= -1;
+    				simplifiedDenominator *= -1;
+    			}
+    		}
+    		
+    		// if the whole number is negative, remove any other negative signs within the fraction
+    		if (whole < 0) { 
     			if (simplifiedNumerator < 0) {
     				simplifiedNumerator *= -1;
     			}
     			if (simplifiedDenominator < 0) {
     				simplifiedDenominator *= -1;
     			}
+    		}
+    		if (whole == 0) {
+    			return simplifiedNumerator + "/" + simplifiedDenominator;
     		}
     		return whole + "_" + simplifiedNumerator + "/" + simplifiedDenominator;
     	}
