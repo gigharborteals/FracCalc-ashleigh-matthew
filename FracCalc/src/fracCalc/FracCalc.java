@@ -162,7 +162,7 @@ public class FracCalc {
     
     /* finds the greatest common factor of the denominator and numerator */
    public static int GCF(int numerator, int denominator) {   
-        if (numerator == 0) {
+       if (numerator == 0) {
           return denominator;
           
         } else if (denominator == 0) {
@@ -170,20 +170,46 @@ public class FracCalc {
           
         } else if (numerator == denominator) { 
             return numerator; 
-            
+          
         } else if (numerator > denominator) {
-        	return GCF(denominator, numerator % denominator);
+        	//these always need to be positive
+            if (numerator < 0) {
+            	numerator *= -1;
+            }
+            if (denominator < 0) {
+            	denominator *= -1;
+            }
+            
+	        while (numerator != denominator) {
+	        	if (numerator > denominator) {
+	        		numerator -= denominator;
+	        	} else {
+	        		denominator -= numerator;
+	        	}
+	        }
+	        return numerator;
+
         } else if (numerator < denominator) {
-        	return GCF(numerator, denominator % numerator);
+        	//these always need to be positive
+            if (numerator < 0) {
+            	numerator *= -1;
+            }
+            if (denominator < 0) {
+            	denominator *= -1;
+            }
+            
+        	while (denominator != numerator) {
+        		if (denominator > numerator) {
+        			denominator -= numerator;
+        		} else {
+        			numerator -= denominator;
+        		}
+        	}
+        	return denominator;
         } else {
         	return 1;
         }
-        /*
-        if (numerator > denominator) { 
-            return GCF(Math.subtractExact(numerator, denominator), denominator); // if the numerator is greater than the denominator, loops the method and returns that.
-        }
-        return GCF(numerator, Math.subtractExact(denominator, numerator)); // Returns greatest common factor outside if statement
-   */
+
    }
    
    
