@@ -56,6 +56,11 @@ public class FracCalc {
         int intFirstOperand[] = separateOperand(firstOperand);
         int intSecondOperand[] = separateOperand(secondOperand);
         
+        //error catch: cannot divide by zero
+        if (intFirstOperand[2] == 0 || intSecondOperand[2]== 0) {
+        	return "Error: Cannot divide by zero. Please enter a valid expression.";
+        }
+        
         String answer = ""; //initializes variable
         
         if (operator.contains("*")) { //if operator is multiplication, multiply operands
@@ -65,7 +70,7 @@ public class FracCalc {
         } else if (operator.contains("-")) {
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("/")) {
-        	if (intFirstOperand[0] == 0 || intSecondOperand[0] == 0) {
+        	if (((intFirstOperand[0] == 0 && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1)) || ((intSecondOperand[0] == 0)) && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1) {
         		System.out.println("Error: Cannot divide by zero. Answer is undefined.");
         	}
         	else {
@@ -304,6 +309,7 @@ public class FracCalc {
      * numerator and denominator, turning the division into multiplication. This allows the use of the 
      * multiplication method */
     public static String division(int whole1, int whole2, int numerator1, int numerator2, int denominator1, int denominator2) {
+    	
     	//turns second operand into an improper fraction to be worked with--must be improper before switching denom. and numer. 
     	int improperNumerator1 = improperNumerator(whole2, denominator2, numerator2);
     	int newWhole2 = 0; //operand is now an improper fraction, so whole must be changed to 0
