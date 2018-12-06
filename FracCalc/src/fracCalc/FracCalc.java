@@ -65,22 +65,17 @@ public class FracCalc {
         
         if (operator.contains("*")) { //if operator is multiplication, multiply operands
         	answer = multiplication(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
+        } else if (operator.contains("/")) {
+        	answer = division(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("+")) { // Function to add two fractions together
         	answer = addition(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("-")) {
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        } else if (operator.contains("/")) {
-        	if (((intFirstOperand[0] == 0 && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1)) || ((intSecondOperand[0] == 0)) && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1) {
-        		System.out.println("Error: Cannot divide by zero. Answer is undefined.");
-        	}
-        	else {
-        		answer = division(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        	}
         } else {
         	answer = "Please enter a valid expression."; //error catch
         }
         return answer;
-  
+       
     }
     
     
