@@ -65,7 +65,7 @@ public class FracCalc {
         } else if (operator.contains("-")) {
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else if (operator.contains("/")) {
-        	if (((intFirstOperand[0] == 0 && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1)) || ((intSecondOperand[0] == 0)) && (intFirstOperand[1] < 1) || intFirstOperand[2] < 1) {
+        	if (intFirstOperand[0] == 0 || intSecondOperand[0] == 0) {
         		System.out.println("Error: Cannot divide by zero. Answer is undefined.");
         	}
         	else {
