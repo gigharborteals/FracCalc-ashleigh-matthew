@@ -15,6 +15,7 @@ public class FracCalc {
     		input = in.nextLine();
     		if ( !(input.equalsIgnoreCase("quit")) ) {
     			System.out.println(produceAnswer(input));
+    			System.out.println(""); //makes a tab after answer printed to make things more readable
     		}
     	}
     	in.close();
@@ -52,7 +53,9 @@ public class FracCalc {
         secondOperand = secondOperand.replaceFirst(" ", "");
         
         if (secondOperand.contains(" ")) { //error catch-- prevents exception if there are multiple operations
-        	return "ERROR: Calculator can only calculate one operation at a time. Please make sure there is only one operation, and that there is no space after the second operand.";
+        	return "ERROR: Calculator can only calculate one operation at a time. \nPlease make sure of the following:\n- One (1) operation is being performed\n"
+        			+ "- There is one (1) space on either side of the operator\n- There are no spaces before or after the expression";
+        	//tab added to make error more easily readable
         }
         //separates the operands into whole, numerator, denominator and turns into integers
         int intFirstOperand[] = separateOperand(firstOperand);
@@ -62,7 +65,7 @@ public class FracCalc {
         if (intFirstOperand[2] == 0 || intSecondOperand[2]== 0) {
         	return "Error: Cannot divide by zero. Please enter a valid expression.";
         }
-        //int extraSpaceCheck = intSecondOperand.;
+        
         String answer = ""; //initializes variable
         
         if (operator.contains("*")) { //multiplication
@@ -74,7 +77,7 @@ public class FracCalc {
         } else if (operator.contains("-")) { //subtraction
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
         } else { //error catch-- if operator is anything other than functions listed above
-        	answer = "Please enter a valid expression.";
+        	answer = "ERROR: Invalid expression. \nPlease make sure of the following:\n- There is one (1) space on either side of the operator\n- Only the following operators are used: *, /, +, -";
         }
         return answer;
        
