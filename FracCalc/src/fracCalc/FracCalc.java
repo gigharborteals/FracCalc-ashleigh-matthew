@@ -51,8 +51,8 @@ public class FracCalc {
         input = input.replaceFirst(firstOperand, "");
         secondOperand = secondOperand.replaceFirst(" ", "");
         
-        if (secondOperand.contains(" ")) {
-        	return "ERROR: Please enter a valid expression.";
+        if (secondOperand.contains(" ")) { //error catch-- prevents exception if there are multiple operations
+        	return "ERROR: Calculator can only calculate one operation at a time. Please make sure there is only one operation, and that there is no space after the second operand.";
         }
         //separates the operands into whole, numerator, denominator and turns into integers
         int intFirstOperand[] = separateOperand(firstOperand);
@@ -65,16 +65,16 @@ public class FracCalc {
         //int extraSpaceCheck = intSecondOperand.;
         String answer = ""; //initializes variable
         
-        if (operator.contains("*")) { //if operator is multiplication, multiply operands
+        if (operator.contains("*")) { //multiplication
         	answer = multiplication(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        } else if (operator.contains("/")) {
+        } else if (operator.contains("/")) { //division
         	answer = division(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        } else if (operator.contains("+")) { // Function to add two fractions together
+        } else if (operator.contains("+")) { //addition
         	answer = addition(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        } else if (operator.contains("-")) {
+        } else if (operator.contains("-")) { //subtraction
         	answer = subtraction(intFirstOperand[0], intSecondOperand[0], intFirstOperand[1], intSecondOperand[1], intFirstOperand[2], intSecondOperand[2]);
-        } else {
-        	answer = "Please enter a valid expression."; //error catch
+        } else { //error catch-- if operator is anything other than functions listed above
+        	answer = "Please enter a valid expression.";
         }
         return answer;
        
@@ -142,14 +142,15 @@ public class FracCalc {
     
     /* converts improper fractions into mixed numbers and simplifies them */
     public static String convertToMixedNumber(int numerator, int denominator) {  
-    	int simplifiedNumerator = numerator;
+    	//initializes variables
+	int simplifiedNumerator = numerator;
     	int simplifiedDenominator = denominator;
 
     	int whole = ((simplifiedNumerator - (simplifiedNumerator % simplifiedDenominator)) / denominator);
     	int mixedNumerator = (numerator % denominator);
     	
     	simplifiedNumerator = mixedNumerator / GCF(mixedNumerator, denominator); // Simplifies numerator
-    	simplifiedDenominator = denominator / GCF(mixedNumerator, denominator);
+    	simplifiedDenominator = denominator / GCF(mixedNumerator, denominator); //simplifies denominator
  
     	//if simplified fraction is a whole number, return only the whole number
     	if ((simplifiedNumerator == 0) & (simplifiedDenominator == 1)) { 
@@ -195,10 +196,10 @@ public class FracCalc {
     
     /* finds the greatest common factor of the denominator and numerator */
    public static int GCF(int numerator, int denominator) {   
-       if (numerator == 0) {
+       if (numerator == 0) { 
           return denominator;
           
-        } else if (denominator == 0) {
+        } else if (denominator == 0) { 
           return numerator; 
           
         } else if (numerator == denominator) { 
@@ -256,7 +257,7 @@ public class FracCalc {
         int spaceLoc = 0;
         
         //determines if there is a whole number- if there is not, it is set to 0
-        if (operandHold.contains("_")) {
+        if (operandHold.contains("_")) { //if the operand has a whole number
         	//separates the whole number
         	spaceLoc = operandHold.indexOf("_");
         	whole = operandHold.substring(0, spaceLoc);
@@ -271,10 +272,9 @@ public class FracCalc {
     		operandHold = operandHold.replaceFirst("/", "");
     		denominator = operandHold;
     		
-        } else {
+        } else { //if operand does not have a whole number
         	whole = "0";
         	if (operandHold.contains("/")) { //if the value is a mixed number
-        		
         		//separates the numerator
         		spaceLoc = operandHold.indexOf("/");
         		numerator = operandHold.substring(0, spaceLoc);
@@ -284,8 +284,7 @@ public class FracCalc {
         		operandHold = operandHold.replaceFirst("/", "");
         		denominator = operandHold;
 
-        	} else {
-        		
+        	} else { //if operand is 0 (0 divided by any number is still zero)
         		numerator = "0";
         		denominator = "1";
         		whole = operand;
@@ -306,8 +305,7 @@ public class FracCalc {
     }
     
     
-    /* changes the operand into an integer to do calculations with
-     * --implemented in method separateOperator, lines 188-190-- */
+    //changes the operand into an integer to do calculations with
     public static int operandIntoInt(String operand) { 
     	int intOperand = Integer.parseInt(operand);
     	return intOperand;
@@ -349,10 +347,10 @@ public class FracCalc {
     	if (whole == 0) {
     		return numerator;
     		
-    	} else if ((whole < 0) || (denominator < 0) || (numerator < 0)) {
+    	} else if ((whole < 0) || (denominator < 0) || (numerator < 0)) { //if the operand is negative
     		return (whole * denominator) - numerator;
     		
-    	} else {
+    	} else { //if the operand is positive
     		return (whole * denominator) + numerator;
     		
     	}
